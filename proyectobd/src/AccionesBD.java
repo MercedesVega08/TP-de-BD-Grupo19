@@ -37,16 +37,20 @@ public class AccionesBD {
     }
 
     public static void listar(int id){
-        String sql = "select l.nro_llamada, l.nro_reclamo, count(l.nro_reclamo) from (grupo19.llamada l inner join grupo19.reclamo r on l.nro_reclamo = r.nro_reclamo) where r.id_usuario = ? group by l.nro_llamada, l.nro_reclamo";
+        String sql = "select r.id_usuario, count(l.nro_llamada) as rellamada from (grupo19.llamada l inner join grupo19.reclamo r on l.nro_reclamo = r.nro_reclamo) where r.id_usuario = ? group by r.id_usuario";       
+        int cant = 0;
 
         try(Connection con = ConexionBD.getConnection(); 
-            PreparedStatement pstm = con.prepareStatement(sql);
-            ResultSet rs = pstm.executeQuery()
-        ){
-           while(rs.next()){
-                System.out.println("Nro_llamada: " + rs.getInt("nro_llamada") +
-                                    "Nro_reclamo: " + rs.getInt("nro_reclamo"));
+            PreparedStatement pstm = con.prepareStatement(sql)){
+
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+        
+           if(rs.next()){
+                cant = rs.getInt(1);
            }
+           System.out.println("Cantidad de rellamadas: " + id + ":" + cant);
+
         }catch(SQLException e){
             System.out.println("X Error al listar los reclamos");
             e.printStackTrace();
