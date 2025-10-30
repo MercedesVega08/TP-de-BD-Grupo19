@@ -26,3 +26,5 @@ having varios_em > 1;
 
 /**select * from grupo19.reclamo;
 select * from grupo19.auditoria:*/
+select * from grupo19.usuario u;
+select r.id_usuario, count(l.nro_llamada) as rellamada from (grupo19.llamada l inner join grupo19.reclamo r on l.nro_reclamo = r.nro_reclamo) where r.id_usuario = 1 group by r.id_usuario ;
