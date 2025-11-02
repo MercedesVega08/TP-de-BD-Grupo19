@@ -39,7 +39,7 @@ public class InterfaceConsola{
         if(op == 1) insert();
         else if(op == 2) eliminar();
         else if(op == 3) listar();
-        else if(op == 10) {};
+        else if(op == 10) ConexionBD.closeConnection() ;
     }
 
     private void insert(){
